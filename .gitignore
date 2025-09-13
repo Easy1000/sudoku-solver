@@ -73,3 +73,6 @@ dmypy.json
 # System files
 .DS_Store
 Thumbs.db
+
+# dataset directory
+dataset/
