@@ -1,3 +1,6 @@
+import os
+import sys
+
 import numpy as np
 from tensorflow.keras.layers import (
     Conv2D,
@@ -9,7 +12,6 @@ from tensorflow.keras.layers import (
 from tensorflow.keras.models import Sequential, load_model
 from tensorflow.keras.optimizers import RMSprop
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
-from tensorflow.keras.utils import load_img, img_to_array
 
 
 def build_model() -> Sequential:
@@ -74,15 +76,14 @@ def save_model(model: Sequential):
     model.save("digit_classification_model.keras")
 
 
-def model_predict(image_path: str):
-    model = load_model("digit_classification_model.keras")
-    img = load_img(image_path, color_mode="grayscale", target_size=(32, 32))
-    img_array = img_to_array(img)
-    img_array = img_array / 255.0
-    img_array = np.expand_dims(img_array, axis=0)
+def get_model_path(model_path: str):
+    if hasattr(sys, "_MEIPASS"):
+        return os.path.join(sys._MEIPASS, model_path)
+    return os.path.join(os.path.abspath("."), model_path)
 
-    predictions = model.predict(img_array)
-    predicted_class = np.argmax(predictions, axis=1)[0]
 
-    print("Raw prediction vector:", predictions)
-    print("Predicted digit:", predicted_class)
+def get_digit_classification_model():
+    model_path = get_model_path("digit_classification_model.keras")
+    model = load_model(model_path)
+
+    return model
