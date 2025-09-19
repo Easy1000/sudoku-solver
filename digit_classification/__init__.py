@@ -3,9 +3,9 @@ from .model import (
     build_model,
     compile_model,
     fit_model,
-    model_predict,
+    get_digit_classification_model,
+    get_model_path,
     model_score,
-    resource_path,
     save_model,
 )
 from .preprocess_data import prep_image, preprocess_dataset
