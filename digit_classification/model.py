@@ -1,6 +1,3 @@
-import os
-import sys
-
 import numpy as np
 from tensorflow.keras.layers import (
     Conv2D,
@@ -9,7 +6,7 @@ from tensorflow.keras.layers import (
     Flatten,
     MaxPooling2D,
 )
-from tensorflow.keras.models import Sequential, load_model
+from tensorflow.keras.models import Sequential
 from tensorflow.keras.optimizers import RMSprop
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 
@@ -74,16 +71,3 @@ def model_score(model: Sequential, test_X: np.ndarray, test_y: np.ndarray):
 
 def save_model(model: Sequential):
     model.save("digit_classification_model.keras")
-
-
-def get_model_path(model_path: str):
-    if hasattr(sys, "_MEIPASS"):
-        return os.path.join(sys._MEIPASS, model_path)
-    return os.path.join(os.path.abspath("."), model_path)
-
-
-def get_digit_classification_model():
-    model_path = get_model_path("digit_classification_model.keras")
-    model = load_model(model_path)
-
-    return model
